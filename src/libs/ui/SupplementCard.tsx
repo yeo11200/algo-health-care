@@ -5,12 +5,18 @@ import { Supplement } from "@/libs/api/llm.types";
 interface SupplementCardProps {
   supplement: Supplement;
   index: number;
+  hasCaution?: boolean;
 }
 
 export const SupplementCard = React.memo<SupplementCardProps>(
-  ({ supplement, index }) => {
+  ({ supplement, index, hasCaution = false }) => {
     return (
-      <View style={styles.card}>
+      <View
+        style={[
+          styles.card,
+          hasCaution && styles.cardWithCaution,
+        ]}
+      >
         <View style={styles.header}>
           <View style={styles.numberBadge}>
             <Text style={styles.numberText}>{index + 1}</Text>
@@ -54,6 +60,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  cardWithCaution: {
+    borderLeftWidth: 4,
+    borderLeftColor: "#e67e22",
+    backgroundColor: "#fffaf5",
   },
   header: {
     flexDirection: "row",

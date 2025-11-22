@@ -24,6 +24,19 @@ export const RecommendationScreen = React.memo(() => {
   const navigation = useNavigation<RecommendationScreenNavigationProp>();
   const { recommendation, profile } = route.params;
 
+  // 약물 상호작용 경고가 있는지 확인
+  const hasMedicationWarning =
+    profile.medications &&
+    profile.medications !== "없음" &&
+    (recommendation.summary.includes("⚠️") ||
+      recommendation.summary.includes("약물 상호작용") ||
+      recommendation.summary.includes("의료 전문가"));
+
+  // caution이 있는 supplement 개수
+  const supplementsWithCaution = recommendation.supplements.filter(
+    (s) => s.caution && s.caution.length > 0
+  ).length;
+
   // "다시 입력하기" - 이전 데이터를 전달하여 폼을 채움 (사용자가 수정 가능)
   const handleRetry = useCallback(() => {
     navigation.navigate("Intake", {
@@ -71,6 +84,33 @@ export const RecommendationScreen = React.memo(() => {
           </Text>
         </View>
 
+        {/* 복용 중인 약물 정보 */}
+        {profile.medications && profile.medications !== "없음" && (
+          <View style={styles.medicationSection}>
+            <Text style={styles.medicationLabel}>💊 복용 중인 약물</Text>
+            <View style={styles.medicationCard}>
+              <Text style={styles.medicationText}>{profile.medications}</Text>
+            </View>
+          </View>
+        )}
+
+        {/* 약물 상호작용 경고 */}
+        {hasMedicationWarning && (
+          <View style={styles.warningSection}>
+            <View style={styles.warningHeader}>
+              <Text style={styles.warningIcon}>⚠️</Text>
+              <Text style={styles.warningTitle}>약물 상호작용 주의</Text>
+            </View>
+            <View style={styles.warningCard}>
+              <Text style={styles.warningText}>
+                복용 중인 약물과 영양제 간 상호작용 가능성이 있습니다.{"\n"}
+                각 영양제의 주의사항을 꼭 확인하고, 반드시 의료 전문가와
+                상담 후 섭취하시기 바랍니다.
+              </Text>
+            </View>
+          </View>
+        )}
+
         <View style={styles.summarySection}>
           <Text style={styles.summaryLabel}>종합 요약</Text>
           <View style={styles.summaryCard}>
@@ -79,14 +119,22 @@ export const RecommendationScreen = React.memo(() => {
         </View>
 
         <View style={styles.supplementsSection}>
-          <Text style={styles.sectionTitle}>
-            추천 영양제 ({recommendation.supplements.length}개)
-          </Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>
+              추천 영양제 ({recommendation.supplements.length}개)
+            </Text>
+            {supplementsWithCaution > 0 && (
+              <Text style={styles.cautionCount}>
+                ⚠️ 주의사항 있음 ({supplementsWithCaution}개)
+              </Text>
+            )}
+          </View>
           {recommendation.supplements.map((supplement, index) => (
             <SupplementCard
               key={`${supplement.name}-${index}`}
               supplement={supplement}
               index={index}
+              hasCaution={!!supplement.caution && supplement.caution.length > 0}
             />
           ))}
         </View>
@@ -139,6 +187,57 @@ const styles = StyleSheet.create({
     color: "#666",
     lineHeight: 22,
   },
+  medicationSection: {
+    marginBottom: 16,
+  },
+  medicationLabel: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 8,
+  },
+  medicationCard: {
+    backgroundColor: "#e8f4f8",
+    borderRadius: 12,
+    padding: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: "#3498db",
+  },
+  medicationText: {
+    fontSize: 15,
+    color: "#2c3e50",
+    lineHeight: 22,
+  },
+  warningSection: {
+    marginBottom: 20,
+  },
+  warningHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  warningIcon: {
+    fontSize: 20,
+    marginRight: 8,
+  },
+  warningTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#e67e22",
+  },
+  warningCard: {
+    backgroundColor: "#fff4e6",
+    borderRadius: 12,
+    padding: 16,
+    borderLeftWidth: 4,
+    borderLeftColor: "#e67e22",
+  },
+  warningText: {
+    fontSize: 15,
+    color: "#d35400",
+    lineHeight: 22,
+    fontWeight: "500",
+  },
   summarySection: {
     marginBottom: 24,
   },
@@ -169,11 +268,19 @@ const styles = StyleSheet.create({
   supplementsSection: {
     marginBottom: 24,
   },
+  sectionHeader: {
+    marginBottom: 16,
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "600",
     color: "#333",
-    marginBottom: 16,
+    marginBottom: 4,
+  },
+  cautionCount: {
+    fontSize: 14,
+    color: "#e67e22",
+    fontWeight: "600",
   },
   footer: {
     marginTop: 8,

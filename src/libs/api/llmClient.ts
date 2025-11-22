@@ -37,7 +37,7 @@ function getMockRecommendation(profile: HealthProfile): LLMRecommendation {
       name: "멜라토닌",
       dosage: "0.5-3 mg",
       reason:
-        "수면-각성 주기를 조절하고 수면의 질을 개선하는 데 도움; 피로감의 주요 원인인 만성 수면 부족에 대응하기 위해 취침 30~60분 전에 0.5–3 mg 복용이 일반적입니다.",
+        "피로 고민 + 수면 질 저하 생활 패턴을 고려한 추천. 수면-각성 주기를 조절하고 수면의 질을 개선하여 피로감 완화에 도움. 취침 30~60분 전에 0.5–3 mg 복용이 일반적입니다.",
       caution:
         "일부 약물과 상호작용 가능성(예: 혈압약, 항응고제) 및 특정 질환이 있는 경우 의사와 상담; 운전이나 기계 조작 시 주의; 임신·수유 중인 경우 주의.",
     });
@@ -46,27 +46,27 @@ function getMockRecommendation(profile: HealthProfile): LLMRecommendation {
       name: "비타민 D3",
       dosage: "1000-2000 IU",
       reason:
-        "햇빛 노출이 부족한 생활에서 피로감과 근육/정서적 기분 저하를 완화하는 데 도움이 될 수 있으며, 일반적으로 1000–2000 IU를 매일 시작합니다.",
+        "피로 고민 + 야근 자주 생활 패턴을 고려한 추천. 햇빛 노출이 부족한 생활에서 피로감과 근육/정서적 기분 저하를 완화하는 데 도움이 될 수 있으며, 일반적으로 1000–2000 IU를 매일 시작합니다.",
       caution:
-        "장기간 고용량 복용 시 혈청 칼슘 수치를 확인하는 것이 좋고, 고칼슘혈증 증상에 주의; 특정 약물과의 상호작용 가능.",
+        "장기간 고용량 복용 시 혈청 칼슘 수치를 확인하는 것이 좋고, 고칼슘혈증 증상에 주의; 특정 약물(예: 이뇨제, 스테로이드)과의 상호작용 가능.",
     });
 
     supplements.push({
       name: "비타민 B12",
       dosage: "1000-2500 mcg",
       reason:
-        "에너지 대사 지원 및 피로 감소에 도움; 특히 흡수가 잘 되지 않는 경우나 비건/저단백 식이일 때 보충이 유용할 수 있습니다.",
+        "피로 고민 + 에너지 대사 지원을 위한 추천. 에너지 대사 지원 및 피로 감소에 도움; 특히 흡수가 잘 되지 않는 경우나 비건/저단백 식이일 때 보충이 유용할 수 있습니다.",
       caution:
-        "일부 약물과의 상호작용 가능성(예: 메트포르민, 위산억제제) 및 드물게 알레르기 반응 가능.",
+        "일부 약물과의 상호작용 가능성(예: 메트포르민, 위산억제제) 및 드물게 알레르기 반응 가능. 복용 중인 약물과 함께 섭취 시 의사와 상담하세요.",
     });
 
     supplements.push({
       name: "오메가-3 (EPA+DHA)",
       dosage: "1000-2000 mg",
       reason:
-        "뇌 건강 및 기분 개선에 도움을 줄 수 있으며 전반적인 피로 완화에도 기여할 수 있습니다; 식사와 함께 섭취하는 것이 흡수를 돕습니다.",
+        "피로 고민 + 스트레스 높음 생활 패턴을 고려한 추천. 뇌 건강 및 기분 개선에 도움을 줄 수 있으며 전반적인 피로 완화에도 기여할 수 있습니다; 식사와 함께 섭취하는 것이 흡수를 돕습니다.",
       caution:
-        "혈액 응고제 복용 시 주의; 어패류 알레르기가 있는 경우 피해야 함.",
+        "혈액 응고제(와파린, 아스피린 등) 복용 시 출혈 위험 증가 가능하므로 의사와 상담 필수; 어패류 알레르기가 있는 경우 피해야 함.",
     });
   }
 
@@ -78,7 +78,10 @@ function getMockRecommendation(profile: HealthProfile): LLMRecommendation {
     supplements.push({
       name: "프로바이오틱스",
       dosage: "100억-500억 CFU",
-      reason: "소화 기능 개선과 장 건강에 도움됩니다.",
+      reason:
+        "소화불량 고민을 해결하기 위한 추천. 소화 기능 개선과 장 건강에 도움됩니다. 항생제 복용 중이거나 면역 억제제 복용 시 의사와 상담 후 섭취하세요.",
+      caution:
+        "항생제 복용 시 2-3시간 간격을 두고 섭취; 면역 억제제 복용 시 의사와 상담 필수.",
     });
   }
 
@@ -91,8 +94,10 @@ function getMockRecommendation(profile: HealthProfile): LLMRecommendation {
     supplements.push({
       name: "L-테아닌",
       dosage: "100-200 mg",
-      reason: "스트레스 감소와 수면 질 개선에 도움됩니다.",
-      caution: "카페인과 함께 섭취 시 주의하세요.",
+      reason:
+        "스트레스 높음 생활 패턴 + 수면 질 개선을 위한 추천. 스트레스 감소와 수면 질 개선에 도움됩니다.",
+      caution:
+        "혈압약 복용 시 혈압 강하 효과가 있을 수 있으므로 의사와 상담; 카페인과 함께 섭취 시 주의하세요.",
     });
   }
 
@@ -102,18 +107,18 @@ function getMockRecommendation(profile: HealthProfile): LLMRecommendation {
       name: "비타민 C",
       dosage: "500-1000 mg",
       reason:
-        "흡연 시 산화 스트레스가 증가하므로 항산화제인 비타민 C 보충이 도움이 될 수 있습니다. 흡연자는 비흡연자보다 비타민 C 필요량이 높습니다.",
+        "흡연 생활 패턴 + 산화 스트레스 고려한 추천. 흡연 시 산화 스트레스가 증가하므로 항산화제인 비타민 C 보충이 도움이 될 수 있습니다. 흡연자는 비흡연자보다 비타민 C 필요량이 높습니다.",
       caution:
-        "고용량 복용 시 설사나 위장 장애가 발생할 수 있으므로 적절한 용량을 유지하세요.",
+        "고용량 복용 시 설사나 위장 장애가 발생할 수 있으므로 적절한 용량을 유지하세요. 항응고제(와파린 등) 복용 시 상호작용 가능.",
     });
 
     supplements.push({
       name: "N-아세틸시스테인 (NAC)",
       dosage: "600-1200 mg",
       reason:
-        "흡연으로 인한 폐 손상과 점액 분비 개선에 도움을 줄 수 있으며, 항산화 효과가 있습니다.",
+        "흡연 생활 패턴 + 폐 건강 고려한 추천. 흡연으로 인한 폐 손상과 점액 분비 개선에 도움을 줄 수 있으며, 항산화 효과가 있습니다.",
       caution:
-        "일부 약물과 상호작용 가능성이 있으므로 의사와 상담 후 복용하세요.",
+        "니트로글리세린, 이소소르비드 등과 함께 복용 시 두통 발생 가능; 항응고제와 함께 복용 시 출혈 위험 증가 가능하므로 의사와 상담 후 복용하세요.",
     });
   }
 
@@ -122,11 +127,14 @@ function getMockRecommendation(profile: HealthProfile): LLMRecommendation {
     supplements.push({
       name: "종합 비타민",
       dosage: "1정 (제조사 권장량)",
-      reason: "기본적인 영양소 보충을 위해 추천합니다.",
+      reason:
+        "기본적인 영양소 보충을 위해 추천합니다. 복용 중인 약물과 생활 패턴을 고려한 기본 보충제입니다.",
+      caution:
+        "복용 중인 약물이 있으면 의사와 상담 후 섭취하세요. 특히 항응고제, 이뇨제, 항생제 복용 시 주의가 필요합니다.",
     });
   }
 
-  // Summary 생성
+  // Summary 생성 (약물 상호작용 체크 + 종합 추천 반영)
   const genderText =
     profile.gender === "male"
       ? "남성"
@@ -134,25 +142,30 @@ function getMockRecommendation(profile: HealthProfile): LLMRecommendation {
         ? "여성"
         : "기타";
 
-  let summary = `나이 ${profile.age}세, ${genderText}을 고려한 맞춤형 영양제 추천입니다.`;
+  const concernsText =
+    profile.concerns && profile.concerns.length > 0
+      ? profile.concerns.join(", ")
+      : "일반적인 건강 관리";
+  const lifestyleText =
+    profile.lifestyle && profile.lifestyle.length > 0
+      ? profile.lifestyle.join(", ")
+      : "일반적인 생활 패턴";
 
-  if (supplements.length > 1) {
-    const concernsText =
-      profile.concerns && profile.concerns.length > 0
-        ? profile.concerns.join(", ")
-        : "일반적인 건강 관리";
-    const lifestyleText =
-      profile.lifestyle && profile.lifestyle.length > 0
-        ? profile.lifestyle.join(", ")
-        : "일반적인 생활 패턴";
+  let summary = `나이 ${profile.age}세, ${genderText}을 고려한 맞춤형 영양제 추천입니다. `;
+  summary += `${concernsText} 건강 고민과 ${lifestyleText} 생활 패턴을 종합하여 추천했습니다.`;
 
-    summary = `${concernsText}와 ${lifestyleText}을 고려하여 수면 개선과 에너지 대사를 지원하는 보충제를 제안합니다.`;
-    if (profile.smoking) {
-      summary += ` 흡연 여부를 고려하여 항산화제를 포함했습니다.`;
-    }
-    if (profile.medications) {
-      summary += ` 현재 ${profile.medications}을 복용 중이므로 총 섭취량 관리가 필요하며, 시작 전 의료 전문가와 상담하는 것을 권합니다.`;
-    }
+  if (profile.smoking) {
+    summary += ` 흡연 여부를 고려하여 항산화제를 포함했습니다.`;
+  }
+
+  // 약물 상호작용 경고
+  if (profile.medications && profile.medications !== "없음") {
+    summary += ` ⚠️ 현재 ${profile.medications}을 복용 중이므로 약물 상호작용을 주의해야 합니다. `;
+    summary += `특히 항응고제(와파린, 아스피린 등), 혈압약, 이뇨제, 항생제 복용 시 일부 영양제와 상호작용 가능성이 있으므로 `;
+    summary += `반드시 의료 전문가와 상담 후 섭취하시기 바랍니다. `;
+    summary += `각 영양제의 caution 항목을 꼭 확인하세요.`;
+  } else {
+    summary += ` 복용 중인 약물이 없으므로 일반적인 용량으로 섭취 가능합니다.`;
   }
 
   return {
